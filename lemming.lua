@@ -1,9 +1,12 @@
 local Lemming = {}
 
+Lemming.SIZE_X = 5
+Lemming.SIZE_Y = 8
+
 Lemming.BITMAP = nil
 Lemming.SPRITE_BATCH = nil
-Lemming.SIZE_Y = 8
-Lemming.SIZE_X = 5
+Lemming.WALKING_FRAME = nil 
+
 
 Lemming.RIGHT = 1
 Lemming.LEFT = -1
@@ -27,7 +30,7 @@ end
 function Lemming:batch(sprite_batch)
     local origin_x = Lemming.SIZE_X * 0.5
     local origin_y = Lemming.SIZE_Y * 1.0
-    sprite_batch:add(self.x, self.y, 0, 1, 1, origin_x, origin_y - 1)
+    sprite_batch:add(Lemming.WALKING_FRAME, self.x, self.y, 0, self.dir, 1, origin_x, origin_y - 1)
 end
 
 local stop = 0

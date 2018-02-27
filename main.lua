@@ -20,7 +20,8 @@ function love.load()
     world = World:new(love.graphics.newImage("res/world.png"))
 
     Lemming.BITMAP = love.graphics.newImage("res/lemmings.png")
-    Lemming.SPRITE_BATCH = love.graphics.newSpriteBatch(Lemming.BITMAP, 1024, "stream")
+    Lemming.SPRITE_BATCH = love.graphics.newSpriteBatch(Lemming.BITMAP, test_lemming, "stream")
+    Lemming.WALKING_FRAME = love.graphics.newQuad(0, 0, Lemming.SIZE_X, Lemming.SIZE_Y, Lemming.BITMAP:getDimensions())
 
     for i = 1, test_lemming do
         lemmings[#lemmings+1] = Lemming:new()
