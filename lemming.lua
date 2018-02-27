@@ -1,15 +1,14 @@
 local Lemming = {}
 
-Lemming.BITMAP = love.graphics.newImage("res/lemmings.png")
-Lemming.SPRITE_BATCH = love.graphics.newSpriteBatch(Lemming.BITMAP, 1024, "stream")
+Lemming.BITMAP = nil
+Lemming.SPRITE_BATCH = nil
 Lemming.SIZE_Y = 8
 Lemming.SIZE_X = 5
 
 Lemming.RIGHT = 1
 Lemming.LEFT = -1
 
-Lemming.FALL_SPEED = 40
-Lemming.WALK_SPEED = 30
+Lemming.UPDATE_SPEED = 1
 
 function Lemming:new(...)
     local instance = {}
@@ -31,28 +30,33 @@ function Lemming:batch(sprite_batch)
     sprite_batch:add(self.x, self.y, 0, 1, 1, origin_x, origin_y - 1)
 end
 
+local stop = 0
+
 function Lemming:update(world, dt)
-    local x = self.x
-    local y = self.y
+    for update = 0, Lemming.UPDATE_SPEED do
+        local x = self.x
+        local y = self.y
 
-    local fell = y + (Lemming.FALL_SPEED * dt)
+        local fell = y + 1
 
-    if (not world:check_collision(x, fell)) then
-        self.y = fell
-        return
-    end
-
-    for step = 0, 3 do
-        local walk_x = x + (self.dir * Lemming.WALK_SPEED * dt)
-        local walk_y = y - step
-        if (not world:check_collision(walk_x, walk_y)) then
-            self.x = walk_x
-            self.y = walk_y
-            return
+        if (not world:check_collision(x, fell)) then
+            self.y = fell
+            goto continue
         end
-    end
 
-    self.dir = -self.dir
+        for step = 0, 3 do
+            local walk_x = x + self.dir
+            local walk_y = y - step
+            if (not world:check_collision(walk_x, walk_y)) then
+                self.x = walk_x
+                self.y = walk_y
+                goto continue
+            end
+        end
+
+        self.dir = -self.dir
+        ::continue::
+    end
 end
 
 return Lemming
