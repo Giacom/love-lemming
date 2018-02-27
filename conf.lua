@@ -1,6 +1,6 @@
-zoom = 2
-resolution_x = 1334 / zoom
-resolution_y = 750 / zoom
+game_zoom = 1.5
+resolution_x = 1334
+resolution_y = 750
 
 function love.conf(t)
     t.console = true
