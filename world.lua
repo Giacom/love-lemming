@@ -8,11 +8,11 @@ function World:new(...)
     setmetatable( instance, self )
     self.__index = self
     self._init( instance, ... )
-    self.pasted = love.image.newImageData(256, 256) -- Dirty hack to quickly destroy terrain
     return instance
 end
 
 function World:_init(image)
+    self.pasted = love.image.newImageData(256, 256) -- Dirty hack to quickly destroy terrain
     self.bitmap = image
 end
 
